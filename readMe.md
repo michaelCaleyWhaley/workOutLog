@@ -1,7 +1,7 @@
 
-### Todo app
+# Todo app
 
-## Utilising MongoDB
+### Utilising MongoDB
 
 
 ### NOTES ON MONGO
@@ -32,4 +32,4 @@ You should see 'waiting for connections on port 27017' at this point you have an
 
 1. command: db.Todos.find(); - finds all entries in db
 
-## Install GUI for mongoDB called Robo 3T
+### Install GUI for mongoDB called Robo 3T

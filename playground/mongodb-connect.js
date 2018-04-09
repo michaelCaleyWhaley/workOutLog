@@ -16,16 +16,15 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, client) => {
     const db = client.db('TodoApp');
 
     // ADD RECORD
-    // db.collection('Users').insertOne({
-    //     name: 'michael',
-    //     age: 29,
-    //     location: 'London'
-    // }, (err, result) => {
-    //     if (err) {
-    //         return console.log('Unable to add record');
-    //     }
-    //     console.log(result.ops);
-    // });
+    db.collection('Todos').insertOne({
+        action: 'Gym',
+        completed: false
+    }, (err, result) => {
+        if (err) {
+            return console.log('Unable to add record');
+        }
+        console.log(result.ops);
+    });
 
     // DELETE RECORD
     // db.collection('Todos').deleteOne({ gym: 'chest' }, (error, result) => {
