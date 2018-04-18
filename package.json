@@ -4,7 +4,7 @@
   "description": "mongodb test app",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha server/**/*.test.js"
   },
   "author": "Michael Caley",
   "license": "ISC",
@@ -13,5 +13,10 @@
     "express": "^4.16.3",
     "mongodb": "^3.0.4",
     "mongoose": "^5.0.14"
+  },
+  "devDependencies": {
+    "expect": "^22.4.3",
+    "mocha": "^5.1.0",
+    "supertest": "^3.0.0"
   }
 }
