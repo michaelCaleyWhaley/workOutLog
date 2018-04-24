@@ -22,11 +22,10 @@ app.post('/todos', (req, res) => {
 });
 
 app.get('/todos', (req, res) => {
-    Todo.find((err, query) => {
-        if(err) {
-            res.status(404).end();
-        }
-        res.send(query);
+    Todo.find().then((todos) => {
+        res.send({todos});
+    }, (error) => {
+        res.status(400).send(error);
     });
 });
 
