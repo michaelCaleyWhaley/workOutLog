@@ -32,8 +32,9 @@ app.get('/todos', (req, res) => {
 
 // GET request returning todos from specific IDs
 app.get('/todos/:id', (req, res) => {
-    if (!req.params.id) return res.send('Must include Id in query.');
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(404).send('Must include valid Id in query.');
     Todo.findById(req.params.id).then((collection) => {
+        if(collection === null) return res.status(404).send('Todo not found');
         res.send(collection);
     }).catch((error) => {
         res.status(404).send(error.message);

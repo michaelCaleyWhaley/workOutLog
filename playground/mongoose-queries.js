@@ -29,6 +29,9 @@ const { Users } = require('./../server/models/user.js');
 //     console.log(e);
 // });
 
-Users.find().then((user) => {
-    console.log(Users);
+Users.findById('5acf569255f0030be979bbf8').then((collection) => {
+    if (!collection) return console.log('ID not found');
+    console.log(JSON.stringify(collection));
+}).catch((error) => {
+    console.log(error.message);
 });
