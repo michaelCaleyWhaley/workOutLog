@@ -4,7 +4,11 @@
   "description": "mongodb test app",
   "main": "app.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "mocha server/**/*.test.js"
+  },
+  "engines": {
+    "node": "9.8.0"
   },
   "author": "Michael Caley",
   "license": "ISC",

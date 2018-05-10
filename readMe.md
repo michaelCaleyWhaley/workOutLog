@@ -33,3 +33,7 @@ You should see 'waiting for connections on port 27017' at this point you have an
 1. command: db.Todos.find(); - finds all entries in db
 
 ### Install GUI for mongoDB called Robo 3T
+
+## Deploy to heroku
+
+First you need to install the heroku addon mongolab do this using command 'heroku addons:create mongolab:sandbox'
