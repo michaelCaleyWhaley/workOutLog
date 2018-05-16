@@ -22,6 +22,11 @@ app.post('/todos', (req, res) => {
     });
 });
 
+// index
+app.get('/', (req, res) => {
+    res.send('Visit /todos or post to that address to store a todo');
+});
+
 // GET request returning all todos
 app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
@@ -35,7 +40,7 @@ app.get('/todos', (req, res) => {
 app.get('/todos/:id', (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(404).send('Must include valid Id in query.');
     Todo.findById(req.params.id).then((collection) => {
-        if(collection === null) return res.status(404).send('Todo not found');
+        if (collection === null) return res.status(404).send('Todo not found');
         res.send(collection);
     }).catch((error) => {
         res.status(404).send(error.message);
