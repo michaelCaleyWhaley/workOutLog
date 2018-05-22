@@ -47,6 +47,23 @@ app.get('/todos/:id', (req, res) => {
     });
 });
 
+// Delete route
+app.delete('/todos/:id', (req, res) => {
+    var id = req.params.id;
+    // get the ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).send('Invalid ID');
+    }
+    // find by id parameter and remove
+    Todo.findByIdAndRemove(id).then((success) => {
+        // if no id is found
+        if(success === null) throw 'ID not found';
+        res.status(200).send(success);
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
+});
+
 app.listen(port, () => {
     console.log(`Started on port ${port}`);
 });
