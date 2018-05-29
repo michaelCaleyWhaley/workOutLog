@@ -60,7 +60,7 @@ app.delete('/todos/:id', (req, res) => {
         if(success === null) throw 'ID not found';
         res.status(200).send(success);
     }).catch((e) => {
-        res.status(400).send(e);
+        res.status(404).send(e);
     });
 });
 
