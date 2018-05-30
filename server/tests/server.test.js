@@ -102,15 +102,19 @@ describe('GET /todos/:id', () => {
 
 describe('DELETE /todos/:id', () => {
     it('should return a todo which has been deleted', (done) => {
+        var hexId = todos[0]._id.toHexString();
         request(app)
-            .delete(`/todos/${todos[0]._id}`)
+            .delete(`/todos/${hexId}`)
             .expect(200)
             .expect((res) => {
-                expect(res.body._id).toBe(todos[0]._id);
+                expect(res.body._id).toBe(hexId);
             })
             .end((err, res) => {
-                if(err) return done(err);
-                done();
+                if (err) return done(err);
+                Todo.findById(hexId).then((res) => {
+                    expect(res).toBeFalsy();
+                    done();
+                }).catch((err) => done(err));
             });
     });
 
