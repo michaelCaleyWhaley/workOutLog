@@ -1,3 +1,14 @@
+var env = process.env.NODE_ENV || 'development';
+console.log("ENV******** " + env);
+
+if (env === 'development') {
+    process.env.PORT = 3000;
+    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoApp';
+} else if (env === 'test') {
+    process.env.PORT = 3000;
+    process.env.MONGODB_URI = 'mongodb://localhost:27017/TodoAppTest';
+}
+
 const _ = require('lodash');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -8,7 +19,7 @@ var { Todo } = require('./models/todo.js');
 var { User } = require('./models/user.js');
 
 var app = express();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
@@ -84,10 +95,10 @@ app.patch('/todos/:id', (req, res) => {
     // $set mongodb operator
     // new is a mongoose option on .findByIdAndUpdate
     Todo.findByIdAndUpdate(id, { $set: body }, { new: true }).then((todo) => {
-        if(!todo){
+        if (!todo) {
             return res.status(404).send();
         }
-        res.send({todo});
+        res.send({ todo });
     }).catch((e) => {
         res.status(400).send();
     });
