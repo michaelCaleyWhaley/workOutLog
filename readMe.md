@@ -37,3 +37,12 @@ You should see 'waiting for connections on port 27017' at this point you have an
 ## Deploy to heroku
 
 First you need to install the heroku addon mongolab do this using command 'heroku addons:create mongolab:sandbox'
+
+### MODULES USED
+
+LODASH - Parsing array, object data
+MOCHA - testing framework
+SUPERTEST - Abstraction for http requests when testing
+NPM Validator - used to validate values in the user model
+CRYPTO-JS - encrypts text/objects etc (SHA256 encryption)
+JSONWEBTOKEN 
