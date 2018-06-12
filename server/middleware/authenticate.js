@@ -8,10 +8,10 @@ var authenticate = (req, res, next) => {
         }
         req.user = user;
         req.token = token;
+        next();
     }).catch((error) => {
         res.status(401).send();
     });
-    next();
 };
 
 module.exports = {authenticate};
