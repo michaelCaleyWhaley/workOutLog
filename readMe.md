@@ -45,4 +45,5 @@ MOCHA - testing framework
 SUPERTEST - Abstraction for http requests when testing
 NPM Validator - used to validate values in the user model
 CRYPTO-JS - encrypts text/objects etc (SHA256 encryption)
-JSONWEBTOKEN 
+JSONWEBTOKEN - framework for hashing 
+BCRYPTJS - handles the salting of passwords via algorithm
