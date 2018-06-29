@@ -8,7 +8,7 @@ const { ObjectId } = require('mongodb');
 var { mongoose } = require('./db/mongoose.js');
 var { Todo } = require('./models/todo.js');
 var { User } = require('./models/user.js');
-var {authenticate} = require('./middleware/authenticate.js');
+var { authenticate } = require('./middleware/authenticate.js');
 
 var app = express();
 const port = process.env.PORT;
@@ -26,6 +26,44 @@ app.post('/todos', (req, res) => {
         res.status(400).send(error);
     });
 });
+
+// A new route that allows users to login
+// get hashed password from db and compare to password sent in the request
+// compare email to users email
+const bcrypt = require('bcryptjs');
+
+app.post('/users/login', (req, res) => {
+
+    var body = _.pick(req.body, ['email', 'password']);
+    var userEmail = body.email;
+    var userPassword = body.password;
+
+    if (userEmail && userPassword) {
+        User.findOne({ 'email': userEmail }).then((user) => {
+
+            var hashedPassword = user.password;
+            bcrypt.compare(userPassword, hashedPassword, (err, result) => {
+                res.set({
+                    'x-auth': user.tokens[0].token
+                }).send();
+            });
+
+        }).catch((error) => {
+            res.status(400).send('error');
+        });
+    } else {
+        res.status(401).send('Email and password required.');
+    }
+
+});
+
+
+
+
+
+
+
+
 
 // index
 app.get('/', (req, res) => {
