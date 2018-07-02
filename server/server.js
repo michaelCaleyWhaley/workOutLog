@@ -27,44 +27,6 @@ app.post('/todos', (req, res) => {
     });
 });
 
-// A new route that allows users to login
-// get hashed password from db and compare to password sent in the request
-// compare email to users email
-const bcrypt = require('bcryptjs');
-
-app.post('/users/login', (req, res) => {
-
-    var body = _.pick(req.body, ['email', 'password']);
-    var userEmail = body.email;
-    var userPassword = body.password;
-
-    if (userEmail && userPassword) {
-        User.findOne({ 'email': userEmail }).then((user) => {
-
-            var hashedPassword = user.password;
-            bcrypt.compare(userPassword, hashedPassword, (err, result) => {
-                res.set({
-                    'x-auth': user.tokens[0].token
-                }).send();
-            });
-
-        }).catch((error) => {
-            res.status(400).send('error');
-        });
-    } else {
-        res.status(401).send('Email and password required.');
-    }
-
-});
-
-
-
-
-
-
-
-
-
 // index
 app.get('/', (req, res) => {
     res.send('Visit /todos or post to that address to store a todo');
@@ -148,6 +110,21 @@ app.post('/users', (req, res) => {
     });
 });
 
+// A route that allows users to login
+// get hashed password from db and compare to password sent in the request
+// compare email to users email
+app.post('/users/login', (req, res) => {
+    var body = _.pick(req.body, ['email', 'password']);
+    User.findByCredentials(body.email, body.password).then((user) => {
+        return user.generateAuthToken().then((token) => {
+            res.header('x-auth', token).send(user);
+        });
+    }).catch((e) => {
+        res.status(400).send(e);
+    });
+});
+
+// retrieves users data
 app.get('/users/me', authenticate, (req, res) => {
     res.send(req.user);
 });

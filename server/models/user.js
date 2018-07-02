@@ -73,6 +73,28 @@ UserSchema.statics.findByToken = function (token) {
 
 };
 
+// function to find user on login
+UserSchema.statics.findByCredentials = function (email, password) {
+    var User = this;
+    return User.findOne({ email }).then((user) => {
+        // if user is not found
+        if (!User) {
+            return Promise.reject();
+        }
+        return new Promise((resolve, reject) => {
+            // verify password inside here
+            // use bcrypt.compare
+            bcrypt.compare(password, user.password, function (err, res) {
+                if (res) {
+                    resolve(user);
+                } else {
+                    reject(res);
+                }
+            });
+        });
+    });
+};
+
 // middleware to be executed before each save event
 UserSchema.pre('save', function (next) {
     var user = this;
