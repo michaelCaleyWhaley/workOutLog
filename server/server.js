@@ -110,6 +110,11 @@ app.post('/users', (req, res) => {
     });
 });
 
+// retrieves users data
+app.get('/users/me', authenticate, (req, res) => {
+    res.send(req.user);
+});
+
 // A route that allows users to login
 // get hashed password from db and compare to password sent in the request
 // compare email to users email
@@ -124,9 +129,13 @@ app.post('/users/login', (req, res) => {
     });
 });
 
-// retrieves users data
-app.get('/users/me', authenticate, (req, res) => {
-    res.send(req.user);
+// Logout route
+app.delete('/users/me/token', authenticate, (req, res) => {
+    req.user.removeToken(req.token).then((removed) => {
+        res.status(200).send();
+    }).catch((e) => {
+        res.status(400).send();
+    });
 });
 
 app.listen(port, () => {

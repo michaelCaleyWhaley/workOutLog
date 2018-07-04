@@ -53,6 +53,20 @@ UserSchema.methods.generateAuthToken = function () {
     });
 };
 
+// remove token for logout
+UserSchema.methods.removeToken = function (token) {
+    var user = this;
+
+    return user.update({
+        // use the mongodb pull operator
+        $pull: {
+            tokens: {
+                token: token
+            }
+        }
+    });
+};
+
 // schema statics are per model
 UserSchema.statics.findByToken = function (token) {
     var User = this;
