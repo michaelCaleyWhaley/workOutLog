@@ -16,9 +16,10 @@ const port = process.env.PORT;
 app.use(bodyParser.json());
 
 // POST request creating a new todo entry using the Todo model
-app.post('/todos', (req, res) => {
+app.post('/todos', authenticate, (req, res) => {
     var todo = new Todo({
-        text: req.body.text
+        text: req.body.text,
+        _creator: req.user._id
     });
     todo.save().then((doc) => {
         res.send(doc);
@@ -27,14 +28,11 @@ app.post('/todos', (req, res) => {
     });
 });
 
-// index
-app.get('/', (req, res) => {
-    res.send('Visit /todos or post to that address to store a todo');
-});
-
 // GET request returning all todos
-app.get('/todos', (req, res) => {
-    Todo.find().then((todos) => {
+app.get('/todos', authenticate, (req, res) => {
+    Todo.find({
+        _creator: req.user._id
+    }).then((todos) => {
         res.send({ todos });
     }, (error) => {
         res.status(400).send(error);
@@ -42,9 +40,14 @@ app.get('/todos', (req, res) => {
 });
 
 // GET request returning todos from specific IDs
-app.get('/todos/:id', (req, res) => {
-    if (!ObjectId.isValid(req.params.id)) return res.status(404).send('Must include valid Id in query.');
-    Todo.findById(req.params.id).then((collection) => {
+app.get('/todos/:id', authenticate, (req, res) => {
+    var id = req.params.id;
+    if (!ObjectId.isValid(id)) return res.status(404).send('Must include valid Id in query.');
+
+    Todo.findOne({
+        _id: id,
+        _creator: req.user._id
+    }).then((collection) => {
         if (collection === null) return res.status(404).send('Todo not found');
         res.send(collection);
     }).catch((error) => {
@@ -53,14 +56,17 @@ app.get('/todos/:id', (req, res) => {
 });
 
 // Delete route
-app.delete('/todos/:id', (req, res) => {
+app.delete('/todos/:id', authenticate, (req, res) => {
     var id = req.params.id;
     // get the ID
     if (!ObjectId.isValid(id)) {
         return res.status(404).send('Invalid ID');
     }
     // find by id parameter and remove
-    Todo.findByIdAndRemove(id).then((success) => {
+    Todo.findOneAndRemove({
+        _id: id,
+        _creator: req.user._id
+    }).then((success) => {
         // if no id is found
         if (success === null) throw 'ID not found';
         res.status(200).send(success);
@@ -69,8 +75,13 @@ app.delete('/todos/:id', (req, res) => {
     });
 });
 
+
+
+
+
+
 // UPDATE ROUTE
-app.patch('/todos/:id', (req, res) => {
+app.patch('/todos/:id', authenticate, (req, res) => {
     var id = req.params.id;
     // .pick a lodash function which extracts object properties if they exist. List specified in array
     var body = _.pick(req.body, ['text', 'completed']);
@@ -86,7 +97,12 @@ app.patch('/todos/:id', (req, res) => {
     }
     // $set mongodb operator
     // new is a mongoose option on .findByIdAndUpdate
-    Todo.findByIdAndUpdate(id, { $set: body }, { new: true }).then((todo) => {
+
+    // FINDONEANDUPDATE
+    Todo.findOneAndUpdate({
+        _id: id,
+        _creator: req.user._id
+    }, { $set: body }, { new: true }).then((todo) => {
         if (!todo) {
             return res.status(404).send();
         }
@@ -95,6 +111,11 @@ app.patch('/todos/:id', (req, res) => {
         res.status(400).send();
     });
 });
+
+
+
+
+
 
 // POST /users
 app.post('/users', (req, res) => {
