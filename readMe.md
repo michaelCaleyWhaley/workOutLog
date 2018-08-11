@@ -1,3 +1,4 @@
+_The app will fail without the following file server/db/config.json_
 
 # Todo app
 
