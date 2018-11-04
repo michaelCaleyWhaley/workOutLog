@@ -1,5 +1,12 @@
 html
-  head
-    title= title
+  include includes/head.pug
   body
+    include includes/navbar.pug
     h1= message
+
+    form(method='POST' action='/register')
+      label(for='name') Username:
+      input(type='text', placeholder='Username' name='username')
+
+      label(for='password') Password:
+      input(type='password', placeholder='Password' name='password')

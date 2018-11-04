@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 
 // VIEW LAYER
 app.set('view engine', 'pug');
+app.use(express.static('./public'));
 
 app.get('/', (req, res)=>{
   res.render('index', { title: 'Hey', message: 'Hello there!' })
