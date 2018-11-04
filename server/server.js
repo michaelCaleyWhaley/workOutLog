@@ -15,6 +15,14 @@ const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
+// VIEW LAYER
+app.set('view engine', 'pug');
+
+app.get('/', (req, res)=>{
+  res.render('index', { title: 'Hey', message: 'Hello there!' })
+});
+
+// CRUD API
 // POST request creating a new todo entry using the Todo model
 app.post("/todos", authenticate, (req, res) => {
   var todo = new Todo({
