@@ -32,3 +32,40 @@ body {
     padding: 5px;
     margin: 0 3px;
 }
+
+/* FRONT PAGE */
+.wrap {
+    text-align: center;
+}
+
+.login {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.login form {
+    text-align: left;
+}
+
+.login form label,
+.login form input {
+    display: block;
+}
+
+.login form input {
+    width: 100%;
+    font-size: 1.2rem;
+    margin-top: 3px;
+}
+
+.login form button {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #31383e;
+    border-color: #31383e;
+}
+
+.login form button:hover {
+    background-color: #24292d;
+    border-color: #24292d;
+}

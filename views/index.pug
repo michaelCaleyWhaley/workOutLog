@@ -2,11 +2,17 @@ html
   include includes/head.pug
   body
     include includes/navbar.pug
-    h1= message
+    div.wrap
+      div.login
+        h1 Simple Workout Log
+        p Please make an account to progress to the log page.
 
-    form(method='POST' action='/register')
-      label(for='name') Username:
-      input(type='text', placeholder='Username' name='username')
+        form.sign-in__form(method='POST' action='/users')
+          label(for='text') Email:
+          input(type='text', placeholder='Email' email='Email')
 
-      label(for='password') Password:
-      input(type='password', placeholder='Password' name='password')
+          label(for='password') Password:
+          input(type='password', placeholder='Password' name='password')
+          div.wrap
+            button.btn.btn-primary.sign-in__submit(type='submit') Submit
+  script(type='text/javascript', src='/js/signIn.js')
