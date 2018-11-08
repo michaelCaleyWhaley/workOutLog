@@ -12,6 +12,17 @@ function serialiseForm(form) {
 
 signInSubmit.addEventListener("click", function(e) {
   e.preventDefault();
+  var data = serialiseForm(signInForm);
+  console.log(data);
 
-  serialiseForm(signInForm);
+  var request = new XMLHttpRequest();
+  request.open('POST', './users', true);
+  request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  request.send(data);
+
+  request.onreadystatechange = function(){
+    var authentication = request.getResponseHeader('x-auth');
+    console.log(authentication);
+  }
+
 });
