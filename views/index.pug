@@ -7,12 +7,25 @@ html
         h1 Simple Workout Log
         p Please make an account to progress to the log page.
 
-        form.sign-in__form(method='POST' action='/users')
+        form.sign-in__form(method='POST' action='/users/login')
           label(for='text') Email:
           input(type='text', placeholder='Email' name='email')
 
           label(for='password') Password:
           input(type='password', placeholder='Password' name='password')
           div.wrap
-            button.btn.btn-primary.sign-in__submit(type='submit') Submit
-  script(type='text/javascript', src='/js/signIn.js')
+            button.btn.btn-primary.sign-in__submit(type='submit') Login
+
+        hr.sign-in__hr
+
+        h2.sign-in__h2 Register new user
+        form.sign-in__register(method='POST' action='/users')
+          label(for='text') Email:
+          input(type='text', placeholder='Email' name='email')
+
+          label(for='password') Password:
+          input(type='password', placeholder='Password' name='password')
+          div.wrap
+            button.btn.btn-primary.sign-in__submit(type='submit') Register
+    script(type='text/javascript', src='/js/signIn.js')
+    include includes/footer.pug

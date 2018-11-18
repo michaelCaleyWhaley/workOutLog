@@ -16,11 +16,15 @@ const port = process.env.PORT;
 app.use(bodyParser.json());
 
 // VIEW LAYER
-app.set('view engine', 'pug');
-app.use(express.static('./public'));
+app.set("view engine", "pug");
+app.use(express.static("./public"));
 
-app.get('/', (req, res)=>{
-  res.render('index', { title: 'Hey'});
+app.get("/", (req, res) => {
+  res.render("index", { title: "Hey" });
+});
+
+app.get("/logbook", (req, res) => {
+  res.render("logbook", { title: "Hey" });
 });
 
 // CRUD API
@@ -158,7 +162,10 @@ app.post("/users/login", async (req, res) => {
     const body = _.pick(req.body, ["email", "password"]);
     const user = await User.findByCredentials(body.email, body.password);
     const token = await user.generateAuthToken();
-    res.header("x-auth", token).send(user);
+    res
+      // .header("x-auth", token)
+      .cookie("x-auth", token, { expires: new Date(Date.now() + 900000), httpOnly: true })
+      .send(user);
   } catch (e) {
     res.status(400).send();
   }

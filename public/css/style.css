@@ -69,3 +69,27 @@ body {
     background-color: #24292d;
     border-color: #24292d;
 }
+
+.login__register {
+    width: 100%;
+}
+
+.sign-in__hr {
+    margin: 3em 0;
+}
+
+.sign-in__h2 {
+    
+}
+
+.sign-in__register {
+ 
+}
+
+/* FOOTER */
+footer {
+    margin-top: 3em;
+    background-color: #f8f8f8;
+    height: 100px;
+}
+/* END FOOTER */
