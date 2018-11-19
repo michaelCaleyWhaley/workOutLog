@@ -2,7 +2,7 @@ html
   include includes/head.pug
   body
     include includes/navbar.pug
-    div.wrap
+    div.wrap.wrap--minHeight
       div.login
         h1 Simple Workout Log
         p Please make an account to progress to the log page.
@@ -21,10 +21,10 @@ html
         h2.sign-in__h2 Register new user
         form.sign-in__register(method='POST' action='/users')
           label(for='text') Email:
-          input(type='text', placeholder='Email' name='email')
+          input(type='text', placeholder='Email' name='email' autocomplete="off")
 
           label(for='password') Password:
-          input(type='password', placeholder='Password' name='password')
+          input(type='password', placeholder='Password' name='password' autocomplete="off")
           div.wrap
             button.btn.btn-primary.sign-in__submit(type='submit') Register
     script(type='text/javascript', src='/js/signIn.js')

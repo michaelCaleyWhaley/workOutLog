@@ -4,9 +4,14 @@ body {
     margin: 0;
 }
 
-body {
+html {
+    height: 100%;
+}
+
+html body {
     box-sizing: border-box;
     font-family: 'IBM Plex Sans', sans-serif;
+    min-height: 100%;
 }
 
 .header{
@@ -20,6 +25,16 @@ body {
 .header__logo {
     font-weight: 700;
     margin: auto 0;
+}
+
+.header__logo a {
+    color: white;
+    text-decoration: none;
+}
+
+.header__logo a:hover {
+    color: white;
+    text-decoration: none;
 }
 
 .header__nav ul {
@@ -36,6 +51,11 @@ body {
 /* FRONT PAGE */
 .wrap {
     text-align: center;
+    
+}
+
+.wrap--minHeight {
+    min-height: calc(100% - 150px);
 }
 
 .login {
@@ -79,16 +99,20 @@ body {
 }
 
 .sign-in__h2 {
-    
+    cursor: pointer;
 }
 
 .sign-in__register {
- 
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s linear;
+}
+.sign-in__register.reveal {
+    max-height: 330px;
 }
 
 /* FOOTER */
 footer {
-    margin-top: 3em;
     background-color: #f8f8f8;
     height: 100px;
 }
