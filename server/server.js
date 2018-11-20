@@ -143,7 +143,11 @@ app.post("/users", async (req, res) => {
     const user = new User(userProperties);
     await user.save();
     const token = await user.generateAuthToken();
-    res.header("x-auth", token).send(user);
+    // res.header("x-auth", token).send(user)
+    res
+      .cookie("x-auth", token, { expires: new Date(Date.now() + 900000), httpOnly: true })
+      .status(200)
+      .send();
   } catch (err) {
     res.status(400).send(err);
   }

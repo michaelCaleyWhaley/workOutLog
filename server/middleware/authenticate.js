@@ -10,13 +10,12 @@ var authenticate = (req, res, next) => {
 
     User.findByToken(token).then((user) => {
         if (!user) {
-            return promise.reject();
+            return Promise.reject();
         }
         req.user = user;
         req.token = token;
         next();
     }).catch((error) => {
-        console.log(error);
         res.status(401).send();
     });
 };

@@ -48,7 +48,7 @@ UserSchema.methods.generateAuthToken = function () {
     var access = 'auth';
     var token = jwt.sign({ _id: user._id.toHexString(), access }, process.env.JWT_SECRET).toString();
     
-    user.tokens = user.tokens.concat({ access, token });
+    user.tokens = user.tokens = { access, token };
     
     return user.save().then(() => {
         return token;
@@ -58,7 +58,6 @@ UserSchema.methods.generateAuthToken = function () {
 // remove token for logout
 UserSchema.methods.removeToken = function (token) {
     var user = this;
-
     return user.update({
         // use the mongodb pull operator
         $pull: {
